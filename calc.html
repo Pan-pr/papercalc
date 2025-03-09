@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tissue Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;700&display=swap');
+        body { font-family: 'Prompt', sans-serif; text-align: center; padding: 20px; position: relative; }
+        h2 { font-weight: 400; }
+        input { margin: 5px; padding: 8px; }
+        button { padding: 10px; background-color: white; color: black; border: 2px solid black; cursor: pointer; }
+        button:hover { background-color: lightgray; }
+        .lang-container { position: absolute; top: 10px; right: 10px; }
+        .lang-btn { margin: 5px; padding: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="lang-container">
+        <button class="lang-btn" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" onclick="changeLanguage('th')">ไทย</button>
+    </div>
+    
+    <h2 id="title">Best Tissue Deal Calculator</h2>
+    <label id="label-price">Price (THB): <input type="number" id="price" step="0.01"></label><br>
+    <label id="label-rolls">Number of Rolls: <input type="number" id="rolls"></label><br>
+    <label id="label-discount">Discount (%): <input type="number" id="discount"></label><br>
+    <button onclick="calculateBestDeal()" id="calculate-btn">Calculate</button>
+    <h3 id="result"></h3>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Tissue Price Calculator",
+                labelPrice: "Price (THB):",
+                labelRolls: "Number of Rolls:",
+                labelDiscount: "Discount (%):",
+                calculateBtn: "Calculate"
+            },
+            th: {
+                title: "เครื่องคำนวณราคาทิชชู่",
+                labelPrice: "ราคา (บาท):",
+                labelRolls: "จำนวนม้วน:",
+                labelDiscount: "ส่วนลด (%):",
+                calculateBtn: "คำนวณ"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('title').innerText = translations[lang].title;
+            document.getElementById('label-price').innerHTML = translations[lang].labelPrice + ' <input type="number" id="price" step="0.01">';
+            document.getElementById('label-rolls').innerHTML = translations[lang].labelRolls + ' <input type="number" id="rolls">';
+            document.getElementById('label-discount').innerHTML = translations[lang].labelDiscount + ' <input type="number" id="discount">';
+            document.getElementById('calculate-btn').innerText = translations[lang].calculateBtn;
+        }
+
+        function calculateBestDeal() {
+            let price = parseFloat(document.getElementById('price').value) || 0;
+            let rolls = parseInt(document.getElementById('rolls').value) || 1;
+            let discount = parseFloat(document.getElementById('discount').value) || 0;
+            
+            let finalPrice = price - (price * (discount / 100));
+            let pricePerRoll = finalPrice / rolls;
+            
+            document.getElementById('result').innerText = `Final Price: ฿${finalPrice.toFixed(2)}, Price per Roll: ฿${pricePerRoll.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
